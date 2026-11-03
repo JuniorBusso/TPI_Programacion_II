@@ -4,9 +4,9 @@ public class Profesional {
     private String apellido;
     private String telefono;
     private String correo;
-    private String especialidad;
+    private Especialidad especialidad;
 
-    public Profesional(int matricula, String nombre, String apellido, String telefono, String correo, String especialidad) {
+    public Profesional(int matricula, String nombre, String apellido, String telefono, String correo, Especialidad especialidad) {
         this.matricula = matricula;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -27,6 +27,10 @@ public class Profesional {
         return apellido;
     }
 
+    public String getNombreCompleto() {
+        return nombre + " " + apellido;
+    }
+
     public String getTelefono() {
         return telefono;
     }
@@ -35,7 +39,7 @@ public class Profesional {
         return correo;
     }
 
-    public String getEspecialidad() {
+    public Especialidad getEspecialidad() {
         return especialidad;
     }
 }
