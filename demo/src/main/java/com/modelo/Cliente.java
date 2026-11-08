@@ -1,17 +1,17 @@
+package com.modelo;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Cliente {
     private int id;
     private String nombre;
-    private String apellido;
+    private String dni;
     private String telefono;
     private List<Mascota> mascotas;
 
-    public Cliente(int id, String nombre, String apellido, String telefono) {
-        this.id = id;
+    public Cliente(String nombre, String dni, String telefono) {
         this.nombre = nombre;
-        this.apellido = apellido;
+        this.dni = dni;
         this.telefono = telefono;
         this.mascotas = new ArrayList<>();
     }
@@ -28,8 +28,8 @@ public class Cliente {
         return nombre;
     }
 
-    public String getApellido() {
-        return apellido;
+    public String getDni() {
+        return dni;
     }
 
     public String getTelefono() {
@@ -38,5 +38,26 @@ public class Cliente {
 
     public List<Mascota> getMascotas() {
         return mascotas;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public void setDni(String dni) {
+        this.dni = dni;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
+
+    @Override
+    public String toString() {
+        return nombre + " | DNI " + dni + " | Tel " + telefono + " | Mascotas: " + mascotas.size();
     }
 }

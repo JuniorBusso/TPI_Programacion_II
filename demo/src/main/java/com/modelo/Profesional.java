@@ -1,4 +1,7 @@
+package com.modelo;
+
 public class Profesional {
+    private int id;
     private int matricula;
     private String nombre;
     private String apellido;
@@ -15,6 +18,19 @@ public class Profesional {
         this.especialidad = especialidad;
     }
 
+    public Profesional(int id, int matricula, String nombre, String apellido, String telefono, String correo, Especialidad especialidad) {
+        this(matricula, nombre, apellido, telefono, correo, especialidad);
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public int getMatricula() {
         return matricula;
     }
@@ -27,10 +43,6 @@ public class Profesional {
         return apellido;
     }
 
-    public String getNombreCompleto() {
-        return nombre + " " + apellido;
-    }
-
     public String getTelefono() {
         return telefono;
     }
@@ -41,5 +53,10 @@ public class Profesional {
 
     public Especialidad getEspecialidad() {
         return especialidad;
+    }
+
+    @Override
+    public String toString() {
+        return apellido + ", " + nombre + " (Mat. " + matricula + ", " + especialidad + ")";
     }
 }
