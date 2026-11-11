@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.time.format.ResolverStyle;
 import java.util.List;
 import java.util.Scanner;
 
@@ -13,7 +14,7 @@ import java.util.Scanner;
  */
 public class Vista {
 
-    private static final DateTimeFormatter FORMATO_FECHA = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    private static final DateTimeFormatter FORMATO_FECHA = DateTimeFormatter.ofPattern("dd/MM/uuuu").withResolverStyle(ResolverStyle.STRICT);
     private static final DateTimeFormatter FORMATO_HORA = DateTimeFormatter.ofPattern("HH:mm");
 
     private final Scanner scanner = new Scanner(System.in);
@@ -92,8 +93,19 @@ public class Vista {
         }
     }
 
-    public int pedirDuracion() {
-        return pedirEntero("Duración estimada en minutos: ");
+    // Pregunta s/n y devuelve true si la respuesta es "s"
+    public boolean confirmar(String mensaje) {
+        while (true) {
+            System.out.print(mensaje + " (s/n): ");
+            String respuesta = scanner.nextLine().trim().toLowerCase();
+            if (respuesta.equals("s")) {
+                return true;
+            }
+            if (respuesta.equals("n")) {
+                return false;
+            }
+            mostrarError("Responda s o n");
+        }
     }
 
     public int pedirIdTurno() {

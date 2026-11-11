@@ -19,7 +19,7 @@ public class ServicioDAO {
 
     public List<Servicio> listarTodos() throws SQLException {
         List<Servicio> servicios = new ArrayList<>();
-        String sql = "SELECT id, nombre, especialidad_requerida FROM servicio ORDER BY nombre";
+        String sql = "SELECT id, nombre, duracion_min, especialidad_requerida FROM servicio ORDER BY nombre";
         try (PreparedStatement ps = conexion.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
@@ -31,7 +31,7 @@ public class ServicioDAO {
 
     // Devuelve null si no existe
     public Servicio buscarPorId(int id) throws SQLException {
-        String sql = "SELECT id, nombre, especialidad_requerida FROM servicio WHERE id = ?";
+        String sql = "SELECT id, nombre, duracion_min, especialidad_requerida FROM servicio WHERE id = ?";
         try (PreparedStatement ps = conexion.prepareStatement(sql)) {
             ps.setInt(1, id);
             try (ResultSet rs = ps.executeQuery()) {
@@ -47,6 +47,7 @@ public class ServicioDAO {
         return new Servicio(
             rs.getInt("id"),
             rs.getString("nombre"),
+            rs.getInt("duracion_min"),
             Especialidad.valueOf(rs.getString("especialidad_requerida"))
         );
     }

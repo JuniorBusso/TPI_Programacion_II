@@ -60,6 +60,7 @@ public class InicializadorBD {
             "CREATE TABLE IF NOT EXISTS servicio (" +
             "id INT AUTO_INCREMENT PRIMARY KEY, " +
             "nombre VARCHAR(60) NOT NULL UNIQUE, " +
+            "duracion_min INT NOT NULL, " +
             "especialidad_requerida VARCHAR(20) NOT NULL" +
             ")";
 
@@ -101,9 +102,9 @@ public class InicializadorBD {
         };
 
         String[] servicios = {
-            "INSERT IGNORE INTO servicio (nombre, especialidad_requerida) VALUES ('Consulta general', 'GENERAL')",
-            "INSERT IGNORE INTO servicio (nombre, especialidad_requerida) VALUES ('Cirugía', 'CIRUGIA')",
-            "INSERT IGNORE INTO servicio (nombre, especialidad_requerida) VALUES ('Vacunación', 'VACUNACION')"
+            "INSERT IGNORE INTO servicio (nombre, duracion_min, especialidad_requerida) VALUES ('Consulta general', 15, 'GENERAL')",
+            "INSERT IGNORE INTO servicio (nombre, duracion_min, especialidad_requerida) VALUES ('Cirugía', 60, 'CIRUGIA')",
+            "INSERT IGNORE INTO servicio (nombre, duracion_min, especialidad_requerida) VALUES ('Vacunación', 30, 'VACUNACION')"
         };
 
         try (Connection conexion = ConexionBD.conectar();

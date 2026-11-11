@@ -64,20 +64,20 @@ public class ControladorTurno {
             }
 
             // 3) Cuándo
+            int duracion = servicio.getDuracionMin(); // la duración la define el servicio
             LocalDate fecha = vista.pedirFecha();
             LocalTime hora = vista.pedirHora();
-            int duracion = vista.pedirDuracion();
 
-            while (true) {
-                String error = validarHorario(fecha, hora, duracion);
-                if (error != null) {
-                    vista.mostrarError(error);
-                    fecha = vista.pedirFecha();
-                    hora = vista.pedirHora();
-                    duracion = vista.pedirDuracion();
-                } else {
-                    break;
+            // Si el horario no es válido se vuelve a pedir, pero el usuario puede abandonar
+            String error = validarHorario(fecha, hora, duracion);
+            while (error != null) {
+                vista.mostrarError(error);
+                if (!vista.confirmar("¿Desea ingresar otra fecha y hora?")) {
+                    return;
                 }
+                fecha = vista.pedirFecha();
+                hora = vista.pedirHora();
+                error = validarHorario(fecha, hora, duracion);
             }
 
             // 4) Que no se superponga con otros turnos
@@ -151,11 +151,7 @@ public class ControladorTurno {
 
     // Devuelve el mensaje de error, o null si el horario es válido
     private String validarHorario(LocalDate fecha, LocalTime hora, int duracion) {
-        if (duracion <= 0) {
-            return "La duración debe ser mayor a 0 minutos";
-        }
         // El turno completo (inicio y fin) debe estar dentro del horario de atención.
-        // Se calcula con minutos enteros porque LocalTime "da la vuelta" a las 00:00.
         int inicio = hora.getHour() * 60 + hora.getMinute();
         if (inicio < APERTURA_MIN || inicio + duracion > CIERRE_MIN) {
             return "El turno debe estar dentro del horario de atención (08:00 a 16:00)";

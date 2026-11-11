@@ -84,8 +84,12 @@ public class Turno {
         estado = EstadoTurno.CANCELADO;
     }
 
+    // Solo se puede finalizar un turno de hoy o de una fecha pasada
     public void finalizar() {
         validarProgramado();
+        if (fecha.isAfter(LocalDate.now())) {
+            throw new IllegalStateException("No se puede finalizar un turno de una fecha futura (" + fecha + ")");
+        }
         estado = EstadoTurno.FINALIZADO;
     }
 
