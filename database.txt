@@ -44,11 +44,13 @@ CREATE TABLE IF NOT EXISTS profesional (
 );
 
 servicio: prestaciones que ofrece la veterinaria
+duracion_min: duracion estimada fija en minutos
 especialidad_requerida: especialidad que debe tener el profesional
 ---
 CREATE TABLE IF NOT EXISTS servicio (
     id                      INT AUTO_INCREMENT PRIMARY KEY,
     nombre                  VARCHAR(60) NOT NULL UNIQUE,
+    duracion_min            INT NOT NULL,
     especialidad_requerida  VARCHAR(20) NOT NULL
 );
 
@@ -80,6 +82,6 @@ VALUES (1002, 'Luis', 'Gómez', '3534000002', 'luis.gomez@vet.com', 'CIRUGIA');
 INSERT IGNORE INTO profesional (matricula, nombre, apellido, telefono, correo, especialidad)
 VALUES (1003, 'Marta', 'Díaz', '3534000003', 'marta.diaz@vet.com', 'VACUNACION');
 
-INSERT IGNORE INTO servicio (nombre, especialidad_requerida) VALUES ('Consulta general', 'GENERAL');
-INSERT IGNORE INTO servicio (nombre, especialidad_requerida) VALUES ('Cirugía', 'CIRUGIA');
-INSERT IGNORE INTO servicio (nombre, especialidad_requerida) VALUES ('Vacunación', 'VACUNACION');
+INSERT IGNORE INTO servicio (nombre, duracion_min, especialidad_requerida) VALUES ('Consulta general', 15, 'GENERAL');
+INSERT IGNORE INTO servicio (nombre, duracion_min, especialidad_requerida) VALUES ('Cirugía', 60, 'CIRUGIA');
+INSERT IGNORE INTO servicio (nombre, duracion_min, especialidad_requerida) VALUES ('Vacunación', 30, 'VACUNACION');
