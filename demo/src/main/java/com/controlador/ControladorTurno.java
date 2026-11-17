@@ -20,8 +20,8 @@ import com.vista.Vista;
 public class ControladorTurno {
 
     // Horario de atención: de 08:00 a 16:00 (en minutos desde las 00:00)
-    private static final int APERTURA_MIN = 8 * 60;
-    private static final int CIERRE_MIN = 16 * 60;
+    static final int APERTURA_MIN = 8 * 60;
+    static final int CIERRE_MIN = 16 * 60;
 
     private Vista vista;
     private ControladorCliente controladorCliente;

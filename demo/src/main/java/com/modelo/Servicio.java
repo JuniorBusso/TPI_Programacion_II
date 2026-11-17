@@ -16,8 +16,17 @@ public class Servicio {
         this.especialidadRequerida = especialidadRequerida;
     }
 
+    // Para servicios nuevos (el id lo asigna la BD)
+    public Servicio(String nombre, int duracionMin, Especialidad especialidadRequerida) {
+        this(0, nombre, duracionMin, especialidadRequerida);
+    }
+
     public int getId() {
         return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getNombre() {

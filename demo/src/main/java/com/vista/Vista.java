@@ -1,5 +1,6 @@
 package com.vista;
 
+import java.nio.charset.Charset;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -17,7 +18,15 @@ public class Vista {
     private static final DateTimeFormatter FORMATO_FECHA = DateTimeFormatter.ofPattern("dd/MM/uuuu").withResolverStyle(ResolverStyle.STRICT);
     private static final DateTimeFormatter FORMATO_HORA = DateTimeFormatter.ofPattern("HH:mm");
 
-    private final Scanner scanner = new Scanner(System.in);
+    //Se configura el scanner para que lea bien desde la consola, sino tildes y ñ se cambian por otros caracteres
+    private final Scanner scanner = new Scanner(System.in, codificacionConsola());
+
+    private static Charset codificacionConsola() {
+        if (System.console() != null) {
+            return System.console().charset();
+        }
+        return Charset.defaultCharset();
+    }
 
     // ---------- Menú ----------
 
@@ -32,6 +41,9 @@ public class Vista {
         System.out.println("6. Cancelar turno");
         System.out.println("7. Finalizar turno");
         System.out.println("8. Listar profesionales");
+        System.out.println("9. Agregar profesional");
+        System.out.println("10. Listar servicios");
+        System.out.println("11. Agregar servicio");
         System.out.println("0. Salir");
     }
 
@@ -67,6 +79,50 @@ public class Vista {
 
     public String pedirEspecie() {
         return pedirTexto("Especie de la mascota: ");
+    }
+
+    // ---------- Datos de profesional ----------
+
+    public int pedirMatricula() {
+        return pedirEntero("Matrícula del profesional: ");
+    }
+
+    public String pedirNombreProfesional() {
+        return pedirTexto("Nombre del profesional: ");
+    }
+
+    public String pedirApellidoProfesional() {
+        return pedirTexto("Apellido del profesional: ");
+    }
+
+    // Devuelve null si se deja vacío (dato opcional)
+    public String pedirTelefonoProfesional() {
+        System.out.print("Teléfono del profesional (Enter si no tiene): ");
+        String telefono = scanner.nextLine().trim();
+        if (telefono.isEmpty()) {
+            return null;
+        }
+        return telefono;
+    }
+
+    // Devuelve null si se deja vacío (dato opcional)
+    public String pedirCorreoProfesional() {
+        System.out.print("Correo del profesional (Enter si no tiene): ");
+        String correo = scanner.nextLine().trim();
+        if (correo.isEmpty()) {
+            return null;
+        }
+        return correo;
+    }
+
+    // ---------- Datos de servicio ----------
+
+    public String pedirNombreServicio() {
+        return pedirTexto("Nombre del servicio: ");
+    }
+
+    public int pedirDuracionServicio() {
+        return pedirEntero("Duración del servicio en minutos: ");
     }
 
     // ---------- Datos de turno ----------

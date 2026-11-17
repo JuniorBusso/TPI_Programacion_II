@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +17,50 @@ public class ProfesionalDAO {
 
     public ProfesionalDAO(Connection conexion) {
         this.conexion = conexion;
+    }
+
+    public void insertar(Profesional profesional) throws SQLException {
+        String sql = "INSERT INTO profesional (matricula, nombre, apellido, telefono, correo, especialidad) " +
+                     "VALUES (?, ?, ?, ?, ?, ?)";
+        try (PreparedStatement ps = conexion.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+            ps.setInt(1, profesional.getMatricula());
+            ps.setString(2, profesional.getNombre());
+            ps.setString(3, profesional.getApellido());
+            // teléfono y correo son opcionales: pueden guardarse como NULL
+            if (profesional.getTelefono() == null) {
+                ps.setNull(4, Types.VARCHAR);
+            } else {
+                ps.setString(4, profesional.getTelefono());
+            }
+            if (profesional.getCorreo() == null) {
+                ps.setNull(5, Types.VARCHAR);
+            } else {
+                ps.setString(5, profesional.getCorreo());
+            }
+            ps.setString(6, profesional.getEspecialidad().name());
+            ps.executeUpdate();
+
+            try (ResultSet claves = ps.getGeneratedKeys()) {
+                if (claves.next()) {
+                    profesional.setId(claves.getInt(1));
+                }
+            }
+        }
+    }
+
+    // Devuelve null si no existe
+    public Profesional buscarPorMatricula(int matricula) throws SQLException {
+        String sql = "SELECT id, matricula, nombre, apellido, telefono, correo, especialidad " +
+                     "FROM profesional WHERE matricula = ?";
+        try (PreparedStatement ps = conexion.prepareStatement(sql)) {
+            ps.setInt(1, matricula);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return armarProfesional(rs);
+                }
+            }
+        }
+        return null;
     }
 
     public List<Profesional> listarTodos() throws SQLException {

@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import com.controlador.ControladorCliente;
 import com.controlador.ControladorMascota;
 import com.controlador.ControladorProfesional;
+import com.controlador.ControladorServicio;
 import com.controlador.ControladorTurno;
 import com.modelo.database.ConexionBD;
 import com.modelo.database.InicializadorBD;
@@ -29,6 +30,7 @@ public class Main {
             ControladorCliente controladorCliente = new ControladorCliente(vista, conexion);
             ControladorMascota controladorMascota = new ControladorMascota(vista, conexion, controladorCliente);
             ControladorProfesional controladorProfesional = new ControladorProfesional(vista, conexion);
+            ControladorServicio controladorServicio = new ControladorServicio(vista, conexion);
             ControladorTurno controladorTurno = new ControladorTurno(vista, conexion, controladorCliente);
 
             int opcion;
@@ -60,6 +62,15 @@ public class Main {
                         break;
                     case 8:
                         controladorProfesional.listarProfesionales();
+                        break;
+                    case 9:
+                        controladorProfesional.agregarProfesional();
+                        break;
+                    case 10:
+                        controladorServicio.listarServicios();
+                        break;
+                    case 11:
+                        controladorServicio.agregarServicio();
                         break;
                     case 0:
                         vista.mostrarMensaje("Hasta luego");
